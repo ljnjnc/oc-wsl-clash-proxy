@@ -24,6 +24,7 @@
 - 支持固定代理覆盖：`PROXY_URL`
 - 自动写入：`~/.openclaw/openclaw-proxy.env`
 - 注入 `openclaw-gateway.service` 的 `ExecStartPre` 刷新钩子
+- Windows 代理软件需开启 **Allow LAN / 允许局域网连接**，否则 WSL 可能无法连到代理端口
 
 ### 快速开始
 
@@ -68,6 +69,7 @@ Make OpenClaw running in **WSL2** automatically use your Windows-hosted proxy, a
 - Support fixed override via `PROXY_URL`
 - Refresh `~/.openclaw/openclaw-proxy.env` automatically
 - Inject pre-start refresh hook into `openclaw-gateway.service`
+- Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL may fail to reach the proxy port
 
 ### Quick Start
 
