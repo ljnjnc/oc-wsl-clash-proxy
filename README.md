@@ -24,7 +24,7 @@ bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 
 ## 可选参数
 
-- PROXY_URL：固定代理 URL（最高优先级），例如 http://172.21.208.1:7890
+- PROXY_URL：固定代理 URL（最高优先级），例如 http://<WINDOWS_HOST_IP>:7890
 - CLASH_PORT：单一优先端口（兼容旧参数）
 - PROXY_PORTS：自动探测端口列表（逗号分隔）
 - SERVICE_NAME：默认 openclaw-gateway.service
@@ -35,7 +35,7 @@ bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 
 # 2) 固定代理地址
-PROXY_URL=http://172.21.208.1:7890 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+PROXY_URL=http://<WINDOWS_HOST_IP>:7890 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 
 # 3) 自定义端口探测顺序
 PROXY_PORTS=7897,7890,20171,9090 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
