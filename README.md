@@ -1,44 +1,47 @@
 # oc-wsl-clash-proxy
 
 > **让 OpenClaw 在 WSL2 自动跟随 Windows 代理分流策略。**  
-> One command to keep WSL proxy in sync with your Windows host (Clash / Clash Verge / V2RayN / sing-box).
+> Keep WSL proxy in sync with your Windows host (Clash / Clash Verge / V2RayN / sing-box) with one command.
 
-[中文](#中文) | [English](#english)
+<p>
+  <a href="#中文">中文</a> · <a href="#english">English</a>
+</p>
 
 ---
 
 ## 中文
 
-### 这是干什么的？
+### 一句话
 
-`oc-wsl-clash-proxy` 专门解决一个高频痛点：
+这是一个“省时间、少踩坑、稳常驻”的工具：
+让 WSL 内 OpenClaw 自动跟随 Windows 主机代理，避免每次重启后手动修 IP / 端口 / 环境变量。
 
-> OpenClaw 跑在 WSL，代理跑在 Windows。  
-> 重启后 IP 变了、端口变了、服务就断了。
+### 它解决的问题
 
-这个项目会在 gateway 启动前自动刷新代理配置，让 WSL 始终跟随 Windows 主机代理，尽量不手工修配置。
+- WSL 重启后网关 IP 漂移（`172.x.x.1` 变化）
+- 代理端口变化导致偶发不可用
+- 海外 API 可达性差、速度慢、偶发断连
+- 下载资源慢且容易中断
+- 手工维护 `HTTP(S)_PROXY` 容易出错
 
-### 你会得到什么
+### 核心价值
 
-- ✅ **自动探测 Windows 主机 IP**（避免 `172.x.x.1` 写死后失效）
-- ✅ **自动探测代理端口**（适配不同代理软件与模式）
-- ✅ **保留你现有分流规则**（规则继续由 Windows 代理软件统一处理）
-- ✅ **systemd 常驻友好**（`ExecStartPre` 启动前刷新）
-- ✅ **可排障回退**（支持 `PROXY_URL` 固定覆盖）
+- ✅ 自动探测主机 IP + 候选端口
+- ✅ 保留 Windows 代理软件既有分流规则
+- ✅ `ExecStartPre` 启动前刷新，常驻更稳
+- ✅ 支持 `PROXY_URL` 固定覆盖，排障更快
 
-### 适合谁用
+### 适用人群
 
-- OpenClaw 在 WSL2 运行
-- Clash/Clash Verge/V2RayN/sing-box 在 Windows 运行
-- 追求“常驻稳定 + 少人工干预”
+- OpenClaw 在 WSL2
+- 代理软件在 Windows（Clash/Clash Verge/V2RayN/sing-box）
+- 追求“稳定可用 + 少人工维护”
 
 ### 先决条件（重要）
 
-- Windows 代理软件必须开启 **Allow LAN / 允许局域网连接**，否则 WSL 无法访问代理端口
+- Windows 代理软件必须开启 **Allow LAN / 允许局域网连接**，否则 WSL 无法访问代理端口。
 
 ### Clash Verge 示例（Allow LAN）
-
-按这个顺序检查：
 
 1. 打开 Clash Verge → **Settings / General**
 2. 找到 **Allow LAN / 允许局域网连接**
@@ -71,58 +74,45 @@ systemctl --user status openclaw-gateway.service --no-pager
 journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 ```
 
-### 常见收益（真实体验）
-
-- 减少“重启后突然不可用”
-- 减少手工改环境变量和 IP 的操作
-- 降低代理抖动带来的误判与排障时间
-
 ---
 
 ## English
 
-### What is this?
+### TL;DR
 
-`oc-wsl-clash-proxy` fixes a common setup pain:
+A reliability-first helper for OpenClaw on WSL2:
+keep WSL proxy settings aligned with your Windows host proxy automatically.
 
-> OpenClaw runs in WSL, proxy runs on Windows.  
-> After reboot, host IP/port drifts, and the service breaks.
+### Problems it targets
 
-This project refreshes proxy settings before gateway startup, so WSL keeps following your Windows proxy setup automatically.
-
-### Real pain points this targets
-
-- Many top-tier overseas model APIs can be unreachable, or reachable but very slow
-- Large downloads can take hours and often fail midway
-- API calls may randomly disconnect/timeout, breaking long-running workflows
-
-> This project was built from those exact frustrations: reduce manual firefighting, improve reachability and stability first.
+- Host IP drift in WSL after reboot/network changes
+- Proxy port drift across apps/modes
+- Slow or unstable overseas API access
+- Large downloads that are slow or fail midway
+- Fragile manual `HTTP(S)_PROXY` maintenance
 
 ### What you get
 
-- ✅ **Auto-detect Windows host IP** (no fragile hardcoded `172.x.x.1`)
-- ✅ **Auto-detect proxy ports** (works across proxy apps/modes)
-- ✅ **Keep your split-routing behavior** (routing rules stay in your Windows proxy app)
-- ✅ **Systemd-ready startup flow** (`ExecStartPre` refresh)
-- ✅ **Debug fallback** with fixed `PROXY_URL`
+- ✅ Auto-detect host IP + candidate ports
+- ✅ Keep your existing Windows split-routing behavior
+- ✅ Pre-start refresh (`ExecStartPre`) for stable systemd startup
+- ✅ Debug fallback via fixed `PROXY_URL`
 
-### Who should use this
+### Best for
 
-- OpenClaw runs in WSL2
-- Proxy app runs on Windows
-- You want stable long-running service with minimal manual maintenance
+- OpenClaw in WSL2
+- Proxy app on Windows
+- Long-running, low-maintenance workflows
 
 ### Prerequisite (important)
 
-- Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL cannot reach the proxy port
+- Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL cannot reach the proxy port.
 
 ### Clash Verge example (Allow LAN)
 
-Checklist:
-
 1. Open Clash Verge → **Settings / General**
 2. Find **Allow LAN / local network access**
-3. Make sure the toggle is **ON**
+3. Keep the toggle **ON**
 
 <img src="assets/screenshots/clash-verge-allow-lan-zh.jpg" alt="Clash Verge - Allow LAN example (English UI)" width="560">
 
@@ -154,7 +144,7 @@ journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 ## Notes
 
 - Scope: **WSL native + systemd** workflow
-- Docker / OnePanel deployments should use dedicated adaptation
+- Docker / OnePanel needs dedicated adaptation
 - Please comply with local laws and third-party ToS/AUP
 
 ## License
