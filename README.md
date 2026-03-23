@@ -1,6 +1,7 @@
 # oc-wsl-clash-proxy
 
-> Make OpenClaw in **WSL2** follow your **Windows proxy stack** automatically (Clash / Clash Verge / V2RayN / sing-box), with pre-start refresh for stable long-running service.
+> **让 OpenClaw 在 WSL2 自动跟随 Windows 代理分流策略。**  
+> One command to keep WSL proxy in sync with your Windows host (Clash / Clash Verge / V2RayN / sing-box).
 
 [中文](#中文) | [English](#english)
 
@@ -8,28 +9,34 @@
 
 ## 中文
 
-让 OpenClaw 在 **WSL2** 中自动跟随 Windows 主机代理，不再手动改 IP、改端口、改环境变量。  
-尤其适合国内网络环境下的长期常驻（systemd）场景。
+### 这是干什么的？
 
-### 它解决了什么问题
+`oc-wsl-clash-proxy` 专门解决一个高频痛点：
 
-- WSL 每次重启后 Windows 网关 IP 可能变化（`172.x.x.1` 漂移）
-- 代理端口可能变化（不同软件/模式端口不一致）
-- 服务重启后经常“看起来断线”或启动失败
-- 手工维护 `HTTP(S)_PROXY` 容易出错
+> OpenClaw 跑在 WSL，代理跑在 Windows。  
+> 重启后 IP 变了、端口变了、服务就断了。
 
-### 为什么值得用
+这个项目会在 gateway 启动前自动刷新代理配置，让 WSL 始终跟随 Windows 主机代理，尽量不手工修配置。
 
-- **自动跟随**：自动探测 Windows 主机 IP + 常见代理端口
-- **稳定启动**：在 gateway 启动前执行刷新，降低冷启动失败率
-- **保留分流策略**：WSL 请求走 Windows 代理，分流逻辑由你的代理软件统一处理
-- **可回退**：支持 `PROXY_URL` 固定地址，排障时一键切换
+### 你会得到什么
+
+- ✅ **自动探测 Windows 主机 IP**（避免 `172.x.x.1` 写死后失效）
+- ✅ **自动探测代理端口**（适配不同代理软件与模式）
+- ✅ **保留你现有分流规则**（规则继续由 Windows 代理软件统一处理）
+- ✅ **systemd 常驻友好**（`ExecStartPre` 启动前刷新）
+- ✅ **可排障回退**（支持 `PROXY_URL` 固定覆盖）
+
+### 适合谁用
+
+- OpenClaw 在 WSL2 运行
+- Clash/Clash Verge/V2RayN/sing-box 在 Windows 运行
+- 追求“常驻稳定 + 少人工干预”
 
 ### 先决条件（重要）
 
-- Windows 代理软件需开启 **Allow LAN / 允许局域网连接**，否则 WSL 可能无法连到代理端口
+- Windows 代理软件必须开启 **Allow LAN / 允许局域网连接**，否则 WSL 无法访问代理端口
 
-### 快速开始
+### 30 秒开始
 
 ```bash
 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
@@ -37,12 +44,12 @@ bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 
 ### 可选参数
 
-- `PROXY_URL`：固定代理 URL（最高优先级），例如 `http://<WINDOWS_HOST_IP>:7890`
-- `CLASH_PORT`：单一优先端口（兼容旧参数）
+- `PROXY_URL`：固定代理 URL（最高优先级），例：`http://<WINDOWS_HOST_IP>:7890`
+- `CLASH_PORT`：单端口优先（兼容旧参数）
 - `PROXY_PORTS`：候选端口列表（逗号分隔）
 - `SERVICE_NAME`：默认 `openclaw-gateway.service`
 
-> 说明：WSL2 下 Windows 主机 IP（常见 `172.x.x.1`）可能随重启/网络变化而变化，通常不建议写死，优先自动探测。
+> 建议：默认走自动探测；仅在排障时使用固定 `PROXY_URL`。
 
 ### 验证
 
@@ -52,30 +59,42 @@ systemctl --user status openclaw-gateway.service --no-pager
 journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 ```
 
+### 常见收益（真实体验）
+
+- 减少“重启后突然不可用”
+- 减少手工改环境变量和 IP 的操作
+- 降低代理抖动带来的误判与排障时间
+
 ---
 
 ## English
 
-Run OpenClaw in **WSL2** while automatically following your Windows-hosted proxy setup.  
-No more manual IP/port/env updates after reboot.
+### What is this?
 
-### What it solves
+`oc-wsl-clash-proxy` fixes a common setup pain:
 
-- Windows host gateway IP in WSL can change after reboot/network switch
-- Proxy ports differ across apps/modes
-- Gateway restart can fail when proxy target drifts
-- Manual `HTTP(S)_PROXY` maintenance is error-prone
+> OpenClaw runs in WSL, proxy runs on Windows.  
+> After reboot, host IP/port drifts, and the service breaks.
 
-### Why use this
+This project refreshes proxy settings before gateway startup, so WSL keeps following your Windows proxy setup automatically.
 
-- **Auto-follow host proxy**: detect Windows host IP + common proxy ports
-- **Stable startup**: refresh before gateway start (`ExecStartPre`)
-- **Keep your routing rules**: traffic goes through your Windows proxy app, so existing split-routing rules still apply
-- **Debug-friendly**: override with fixed `PROXY_URL` when needed
+### What you get
+
+- ✅ **Auto-detect Windows host IP** (no fragile hardcoded `172.x.x.1`)
+- ✅ **Auto-detect proxy ports** (works across proxy apps/modes)
+- ✅ **Keep your split-routing behavior** (routing rules stay in your Windows proxy app)
+- ✅ **Systemd-ready startup flow** (`ExecStartPre` refresh)
+- ✅ **Debug fallback** with fixed `PROXY_URL`
+
+### Who should use this
+
+- OpenClaw runs in WSL2
+- Proxy app runs on Windows
+- You want stable long-running service with minimal manual maintenance
 
 ### Prerequisite (important)
 
-- Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL may fail to reach the proxy port
+- Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL cannot reach the proxy port
 
 ### Quick Start
 
@@ -83,10 +102,10 @@ No more manual IP/port/env updates after reboot.
 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 ```
 
-### Optional Parameters
+### Optional parameters
 
 - `PROXY_URL`: fixed proxy URL (highest priority), e.g. `http://<WINDOWS_HOST_IP>:7890`
-- `CLASH_PORT`: single preferred port (legacy-compatible)
+- `CLASH_PORT`: preferred single port (legacy-compatible)
 - `PROXY_PORTS`: comma-separated candidate ports
 - `SERVICE_NAME`: default `openclaw-gateway.service`
 
