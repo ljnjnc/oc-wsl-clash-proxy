@@ -36,6 +36,16 @@
 
 - Windows 代理软件必须开启 **Allow LAN / 允许局域网连接**，否则 WSL 无法访问代理端口
 
+### Clash Verge 示例（Allow LAN）
+
+按这个顺序检查：
+
+1. 打开 Clash Verge → **Settings / General**
+2. 找到 **Allow LAN / 允许局域网连接**
+3. 确保开关为 **ON**
+
+![Clash Verge - Allow LAN 示例](assets/screenshots/clash-verge-allow-lan.jpg)
+
 ### 30 秒开始
 
 ```bash
@@ -103,6 +113,16 @@ This project refreshes proxy settings before gateway startup, so WSL keeps follo
 ### Prerequisite (important)
 
 - Enable **Allow LAN / local network access** in your Windows proxy app, otherwise WSL cannot reach the proxy port
+
+### Clash Verge example (Allow LAN)
+
+Checklist:
+
+1. Open Clash Verge → **Settings / General**
+2. Find **Allow LAN / local network access**
+3. Make sure the toggle is **ON**
+
+![Clash Verge - Allow LAN example](assets/screenshots/clash-verge-allow-lan.jpg)
 
 ### Quick Start
 
