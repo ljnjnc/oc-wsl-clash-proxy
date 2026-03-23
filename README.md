@@ -78,6 +78,14 @@ journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 
 This project refreshes proxy settings before gateway startup, so WSL keeps following your Windows proxy setup automatically.
 
+### Real pain points this targets
+
+- Many top-tier overseas model APIs can be unreachable, or reachable but very slow
+- Large downloads can take hours and often fail midway
+- API calls may randomly disconnect/timeout, breaking long-running workflows
+
+> This project was built from those exact frustrations: reduce manual firefighting, improve reachability and stability first.
+
 ### What you get
 
 - ✅ **Auto-detect Windows host IP** (no fragile hardcoded `172.x.x.1`)
