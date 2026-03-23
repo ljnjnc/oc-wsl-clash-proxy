@@ -44,7 +44,7 @@
 2. 找到 **Allow LAN / 允许局域网连接**
 3. 确保开关为 **ON**
 
-![Clash Verge - Allow LAN 示例（中文界面）](assets/screenshots/clash-verge-allow-lan-zh.jpg)
+<img src="assets/screenshots/clash-verge-allow-lan-en.jpg" alt="Clash Verge - Allow LAN 示例（中文界面）" width="560">
 
 > 关键开关位置：右侧设置区域中的 **Allow LAN / 允许局域网连接**，请保持 **ON**。
 
@@ -124,7 +124,7 @@ Checklist:
 2. Find **Allow LAN / local network access**
 3. Make sure the toggle is **ON**
 
-![Clash Verge - Allow LAN example (English UI)](assets/screenshots/clash-verge-allow-lan-en.jpg)
+<img src="assets/screenshots/clash-verge-allow-lan-zh.jpg" alt="Clash Verge - Allow LAN example (English UI)" width="560">
 
 > Key toggle location: **Allow LAN / local network access** in the right settings panel, keep it **ON**.
 
