@@ -9,8 +9,11 @@ Use this skill when the user wants OpenClaw in WSL to reliably use Windows Clash
 
 ## What this skill does
 
-- Detects Windows host IP from `/etc/resolv.conf`.
-- Verifies Clash endpoint is reachable (default `:7897`).
+- Detects Windows host IP from `/etc/resolv.conf` (fallback: default route).
+- Auto-detects a usable Windows proxy port (not limited to Clash):
+  - default candidates: `7897,7890,20171,10809,10808,8080,3128,8118`
+  - configurable via `PROXY_PORTS`
+- Supports fixed proxy URL override via `PROXY_URL`.
 - Writes/updates `~/.openclaw/openclaw-proxy.env`.
 - Installs a refresh hook script at `~/.local/bin/openclaw-refresh-proxy.sh`.
 - Configures systemd user override for `openclaw-gateway.service`:
@@ -28,13 +31,22 @@ bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 
 Optional env vars:
 
-- `CLASH_PORT` (default `7897`)
+- `PROXY_URL` (fixed proxy URL, highest priority), e.g. `http://172.21.208.1:7890`
+- `CLASH_PORT` (single preferred port; backward-compatible alias)
+- `PROXY_PORTS` (comma-separated candidates for auto-detection)
 - `SERVICE_NAME` (default `openclaw-gateway.service`)
 
-Example:
+Examples:
 
 ```bash
-CLASH_PORT=7890 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+# fully automatic (recommended)
+bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+
+# fixed proxy URL
+PROXY_URL=http://172.21.208.1:7890 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+
+# custom candidate ports
+PROXY_PORTS=7897,7890,20171,9090 bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
 ```
 
 ## Validation checklist
@@ -54,6 +66,7 @@ Expect:
 
 ## Notes
 
-- If Clash is off or `Allow LAN` is disabled, startup will fail fast (by design).
+- If Clash/proxy app is off or LAN access is disabled, startup will fail fast (by design).
 - If Windows IP changes, next service start auto-refreshes proxy env.
+- This skill is proxy-app agnostic: supports Clash/Clash Verge/V2RayN/Sing-box and other local HTTP proxies via port probing.
 - For non-systemd WSL sessions, fall back to temporary shell proxy export + `openclaw gateway run`.
