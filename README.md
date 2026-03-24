@@ -7,6 +7,19 @@
 - 自动代理机制说明（中文）：[`refs/WSL_PROXY_MECHANISM.md`](refs/WSL_PROXY_MECHANISM.md)
 - 重点：该机制由安装脚本注入 systemd 启动链（`ExecStartPre + EnvironmentFile`），并非 OpenClaw 默认内建行为。
 
+📦 **统一安装位置 / Recommended Install Location**  
+- 推荐目录：`~/.openclaw/workspace/skills/oc-wsl-clash-proxy`
+- 必须用与 OpenClaw Gateway 相同的 Linux 用户执行（通常是当前登录用户）
+
+```bash
+mkdir -p ~/.openclaw/workspace/skills
+cd ~/.openclaw/workspace/skills
+git clone https://github.com/ljnjnc/oc-wsl-clash-proxy.git
+cd oc-wsl-clash-proxy
+bash scripts/enable_wsl_clash_proxy_service.sh
+```
+
+
 <p>
   <a href="#中文">中文</a> · <a href="#english">English</a>
 </p>
@@ -56,6 +69,8 @@
 > 关键开关位置：右侧设置区域中的 **Allow LAN / 允许局域网连接**，请保持 **ON**。
 
 ### 30 秒开始
+
+> 推荐先将仓库放到：`~/.openclaw/workspace/skills/oc-wsl-clash-proxy`
 
 ```bash
 bash scripts/enable_wsl_clash_proxy_service.sh
@@ -123,6 +138,8 @@ keep WSL proxy settings aligned with your Windows host proxy automatically.
 > Key toggle location: **Allow LAN / local network access** in the right settings panel, keep it **ON**.
 
 ### Quick Start
+
+> Recommended repo path: `~/.openclaw/workspace/skills/oc-wsl-clash-proxy`
 
 ```bash
 bash scripts/enable_wsl_clash_proxy_service.sh
