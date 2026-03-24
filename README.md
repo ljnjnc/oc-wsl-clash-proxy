@@ -5,6 +5,7 @@
 
 📘 **机制说明 / Mechanism Note**  
 - 自动代理机制说明（中文）：[`refs/WSL_PROXY_MECHANISM.md`](refs/WSL_PROXY_MECHANISM.md)
+- 使用指南（拿来即用）：[`refs/USAGE.md`](refs/USAGE.md)
 - 重点：该机制由安装脚本注入 systemd 启动链（`ExecStartPre + EnvironmentFile`），并非 OpenClaw 默认内建行为。
 
 📦 **统一安装位置 / Recommended Install Location**  
