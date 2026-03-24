@@ -3,6 +3,10 @@
 > **让 OpenClaw 在 WSL2 自动跟随 Windows 代理分流策略。**  
 > Keep WSL proxy in sync with your Windows host (Clash / Clash Verge / V2RayN / sing-box) with one command.
 
+📘 **机制说明 / Mechanism Note**  
+- 自动代理机制说明（中文）：[`refs/WSL_PROXY_MECHANISM.md`](refs/WSL_PROXY_MECHANISM.md)
+- 重点：该机制由安装脚本注入 systemd 启动链（`ExecStartPre + EnvironmentFile`），并非 OpenClaw 默认内建行为。
+
 <p>
   <a href="#中文">中文</a> · <a href="#english">English</a>
 </p>
