@@ -1,6 +1,6 @@
 # 使用指南（给拿来就用的人）
 
-> 目标：不依赖 `oc` 别名，只用标准命令，5 分钟内跑通。  
+> 目标：只用标准命令，5 分钟内跑通。  
 > 适用：OpenClaw 在 WSL2，代理在 Windows 主机。
 
 ---
@@ -91,9 +91,6 @@ openclaw gateway restart
 # 或
 systemctl --user restart openclaw-gateway.service
 ```
-
-### Q3: `oc` 命令不可用
-`oc` 不是通用官方命令。请统一使用 `openclaw` 和本仓库脚本。
 
 ---
 

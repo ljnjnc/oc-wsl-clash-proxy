@@ -6,7 +6,7 @@
 
 自动代理机制不是 OpenClaw 默认内建逻辑，而是通过一次性安装脚本把“代理刷新流程”注入到 systemd 服务启动链里实现的。
 
-安装后，即使不再手动执行 `oc` 命令，只要 `openclaw-gateway.service` 通过 systemd 启动/重启，都会自动刷新并注入代理环境变量。
+安装后，只要 `openclaw-gateway.service` 通过 systemd 启动/重启，都会自动刷新并注入代理环境变量。
 
 ---
 
