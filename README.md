@@ -58,7 +58,7 @@
 ### 30 秒开始
 
 ```bash
-bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+bash scripts/enable_wsl_clash_proxy_service.sh
 ```
 
 ### 可选参数
@@ -125,7 +125,7 @@ keep WSL proxy settings aligned with your Windows host proxy automatically.
 ### Quick Start
 
 ```bash
-bash skills/oc-wsl-clash-proxy/scripts/enable_wsl_clash_proxy_service.sh
+bash scripts/enable_wsl_clash_proxy_service.sh
 ```
 
 ### Optional parameters
