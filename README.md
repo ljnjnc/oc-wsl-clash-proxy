@@ -107,10 +107,11 @@ bash scripts/oc-check.sh
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
 
-### 安全建议（重要）
+### 安全建议（项目相关）
 
-- 生产环境建议将 Feishu 群策略设为 `allowlist`，不要长期开放 `groupPolicy=open`。
 - 建议启用网关鉴权：`gateway.auth.mode=token`。
+
+> 注：如 Feishu 群开放策略（`groupPolicy`）等属于业务侧自主配置，不作为本脚本功能前提。
 
 ---
 
@@ -192,10 +193,11 @@ bash scripts/oc-check.sh
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
 
-### Security notes (important)
+### Security notes (project-related)
 
-- For production, prefer `groupPolicy=allowlist` for Feishu groups instead of long-term `groupPolicy=open`.
 - Keep gateway auth enabled: `gateway.auth.mode=token`.
+
+> Note: Feishu group exposure policy (`groupPolicy`) is an application-level choice and not a functional prerequisite of this script.
 
 ---
 
