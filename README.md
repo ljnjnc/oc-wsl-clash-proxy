@@ -107,11 +107,10 @@ bash scripts/oc-check.sh
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
 
-### 安全建议（项目相关）
+### 说明
 
-- 建议启用网关鉴权：`gateway.auth.mode=token`。
-
-> 注：如 Feishu 群开放策略（`groupPolicy`）等属于业务侧自主配置，不作为本脚本功能前提。
+> 本项目聚焦“WSL 下自动代理注入 + systemd 启动稳定性”。
+> OpenClaw 其它全局安全选项（如网关鉴权、群策略）属于使用者的部署策略选择。
 
 ---
 
@@ -193,11 +192,10 @@ bash scripts/oc-check.sh
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
 
-### Security notes (project-related)
+### Notes
 
-- Keep gateway auth enabled: `gateway.auth.mode=token`.
-
-> Note: Feishu group exposure policy (`groupPolicy`) is an application-level choice and not a functional prerequisite of this script.
+> This project focuses on auto-proxy injection and startup reliability on WSL + systemd.
+> Other OpenClaw-wide security options (for example gateway auth or channel exposure policy) are deployment choices by each user.
 
 ---
 

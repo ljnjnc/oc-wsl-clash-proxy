@@ -68,7 +68,7 @@ tr '\0' '\n' < /proc/$pid/environ | grep -Ei '^(http|https|no)_proxy='
 
 - 若绕过 systemd，手动直接执行 `node ... gateway`，则不保证自动注入代理。
 - 若 Windows 代理端口变化/关闭，脚本探测可能失败，需要检查代理软件和防火墙。
-- 推荐保留 loopback 绑定并开启网关鉴权（`gateway.auth.mode=token`）。
+- OpenClaw 全局安全策略（如网关鉴权）由使用者按部署策略自行配置。
 
 ---
 
