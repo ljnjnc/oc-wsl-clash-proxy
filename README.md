@@ -5,7 +5,8 @@
 
 📘 **机制说明 / Mechanism Note**  
 - 自动代理机制说明（中文）：[`refs/WSL_PROXY_MECHANISM.md`](refs/WSL_PROXY_MECHANISM.md)
-- 使用指南（拿来即用）：[`refs/USAGE.md`](refs/USAGE.md)
+- 使用指南（中文）：[`refs/USAGE.md`](refs/USAGE.md)
+- Usage guide (English): [`refs/USAGE.en.md`](refs/USAGE.en.md)
 - 重点：该机制由安装脚本注入 systemd 启动链（`ExecStartPre + EnvironmentFile`），并非 OpenClaw 默认内建行为。
 
 📦 **统一安装位置 / Recommended Install Location**  
@@ -158,6 +159,7 @@ keep WSL proxy settings aligned with your Windows host proxy automatically.
 ### Quick Start
 
 > Recommended repo path: `~/.openclaw/workspace/skills/oc-wsl-clash-proxy`
+> See full usage guide: [`refs/USAGE.en.md`](refs/USAGE.en.md)
 
 ```bash
 bash scripts/enable_wsl_clash_proxy_service.sh
