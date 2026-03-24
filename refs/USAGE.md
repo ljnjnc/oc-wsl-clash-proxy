@@ -50,7 +50,7 @@ bash scripts/oc-check.sh
 
 ---
 
-## 4) 日常使用（不要依赖 oc）
+## 4) 日常使用
 
 ```bash
 # 重启
