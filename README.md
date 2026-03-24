@@ -107,11 +107,6 @@ bash scripts/oc-check.sh
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
 
-### 说明
-
-> 本项目聚焦“WSL 下自动代理注入 + systemd 启动稳定性”。
-> OpenClaw 其它全局安全选项（如网关鉴权、群策略）属于使用者的部署策略选择。
-
 ---
 
 ## English
@@ -191,11 +186,6 @@ bash scripts/oc-check.sh
 ```bash
 bash scripts/disable_wsl_clash_proxy_service.sh
 ```
-
-### Notes
-
-> This project focuses on auto-proxy injection and startup reliability on WSL + systemd.
-> Other OpenClaw-wide security options (for example gateway auth or channel exposure policy) are deployment choices by each user.
 
 ---
 
