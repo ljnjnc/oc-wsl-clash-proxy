@@ -93,6 +93,23 @@ systemctl --user status openclaw-gateway.service --no-pager
 journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 ```
 
+### 一键健康检查（推荐）
+
+```bash
+bash scripts/oc-check.sh
+```
+
+### 回滚 / 卸载自动代理注入
+
+```bash
+bash scripts/disable_wsl_clash_proxy_service.sh
+```
+
+### 安全建议（重要）
+
+- 生产环境建议将 Feishu 群策略设为 `allowlist`，不要长期开放 `groupPolicy=open`。
+- 建议启用网关鉴权：`gateway.auth.mode=token`。
+
 ---
 
 ## English
@@ -160,7 +177,35 @@ systemctl --user status openclaw-gateway.service --no-pager
 journalctl --user -u openclaw-gateway.service -n 120 --no-pager
 ```
 
+### One-command health check (recommended)
+
+```bash
+bash scripts/oc-check.sh
+```
+
+### Rollback / disable auto-proxy injection
+
+```bash
+bash scripts/disable_wsl_clash_proxy_service.sh
+```
+
+### Security notes (important)
+
+- For production, prefer `groupPolicy=allowlist` for Feishu groups instead of long-term `groupPolicy=open`.
+- Keep gateway auth enabled: `gateway.auth.mode=token`.
+
 ---
+
+## 开机后自动运行说明
+
+- 该方案依赖 systemd user service。
+- 若希望“未登录也后台运行”，请确认该用户已启用 linger：
+
+```bash
+loginctl show-user $USER -p Linger --value
+# 若返回 no，可由管理员执行：
+# sudo loginctl enable-linger $USER
+```
 
 ## Notes
 
